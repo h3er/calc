@@ -1,5 +1,3 @@
-#:import expandBrackets calc
-
 GridLayout:
 	cols: 1
 	textBox: textBox
@@ -91,7 +89,7 @@ GridLayout:
 				on_release: app.appendText('ans')
 			Button:
 				text: 'expand brackets'
-				on_release: expandBrackets.expandBrackets()
+				on_release: app.appendText('expndbrcts')
 			Button:
 				text: 'clear'
 				on_release: app.appendText('clr')
