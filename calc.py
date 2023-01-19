@@ -66,7 +66,32 @@ class MyApp(App):
         Window.clearcolor = '#121212'
         Window.size = (800, 600)
 
-    def appendText(self, txt):
+        
+        
+        
+        
+        
+        
+        
+        
+    def appendText(self, txt, dis):
+        global exp
+        if txt == 'clr':
+            exp = ''
+            self.root.ids.textBox.text = ''
+        elif txt == '=':
+            ans = str(eval(exp))
+            self.root.ids.textBox.text = ans
+            exp = ''
+        elif 
+        exp += txt
+        
+       
+        
+        
+        
+        
+        '''
         global exp
         if txt == 'clr':
             exp = ''
@@ -75,7 +100,7 @@ class MyApp(App):
             global ans
             try:
                 if 'π' in exp:
-                    #if exp.find('π')   coefficient of pi
+                    #if [exp.find('π')]   coefficient of pi
                     exp = exp.replace('π', str(math.pi))
                 ans = str(eval(exp))
                 self.root.ids.textBox.text = ans
@@ -90,7 +115,13 @@ class MyApp(App):
         else:
             exp += txt
             self.root.ids.textBox.text = exp
-
+'''
+            
+            
+            
+            
+            
+            
 if __name__ == '__main__':
     global exp
     exp = ''
