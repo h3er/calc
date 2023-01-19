@@ -8,7 +8,7 @@ def sin(num): return math.sin(math.radians(num))
 def cos(num): return math.cos(math.radians(num))
 def tan(num): return math.tan(math.radians(num))
 def expandBrackets(text):
-    txt = text
+    txt = str(text)
     amtbrackets = txt.count('(')
     for x in ') ':
         txt = txt.replace(x, '')
@@ -42,12 +42,12 @@ def expandBrackets(text):
         xregular = str(xregular)
         constant = str(constant)
         if xsquared[0] != '-':
-            xsquared = '+', xsquared
+            xsquared = str('+' + xsquared)
         if xregular[0] != '-':
-            xregular = '+', xregular
+            xregular = str('+' + xregular)
         if constant[0] != '-':
             constant = '+', constant
-        bracketans = xcubed, 'x^3', xsquared, 'x^2', xregular, 'x', constant 
+        return str(str(xcubed) + 'x^3' + xsquared + 'x^2' + xregular + 'x' + constant)
     elif amtbrackets == 2:
         xsquared = var_x[0] * var_x[1]
         xregular = (var_x[0] * var_c[1]) + (var_x[1] * var_c[0])
@@ -58,7 +58,7 @@ def expandBrackets(text):
             xregular = '+', xregular
         if constant[0] != '-':
             constant = '+', constant
-        return (xsquared, 'x^2', xregular, 'x', constant)
+        return str(str(xsquared) + 'x^2' + str(xregular) + 'x' + str(constant))
 
 #gui
 class MyApp(App):
@@ -76,37 +76,31 @@ class MyApp(App):
         
     def appendText(self, txt, dis):
         global exp
+        global disp
         if txt == 'clr':
             exp = ''
-            self.root.ids.textBox.text = ''
+            disp = ''
+            self.root.ids.textBox.text = disp
         elif txt == '=':
-            ans = str(eval(exp))
-            self.root.ids.textBox.text = ans
+            global ans
+            ans = eval(exp)
+            self.root.ids.textBox.text = str(ans)
             exp = ''
-        elif 
-        exp += txt
-        
+        elif txt == 'expndbrcts':
+            self.root.ids.textBox.text = expandBrackets(self.root.ids.textBox.text)
+        else:
+            exp += txt
+            try:
+                disp += dis
+            except TypeError:
+                disp += txt
+            self.root.ids.textBox.text = disp
        
         
         
         
         
         '''
-        global exp
-        if txt == 'clr':
-            exp = ''
-            self.root.ids.textBox.text = ''
-        elif txt == '=':
-            global ans
-            try:
-                if 'π' in exp:
-                    #if [exp.find('π')]   coefficient of pi
-                    exp = exp.replace('π', str(math.pi))
-                ans = str(eval(exp))
-                self.root.ids.textBox.text = ans
-                exp = ''
-            except:
-                pass
         elif txt == 'ans':
             exp += ans
             self.root.ids.textBox.text = exp
@@ -124,5 +118,7 @@ class MyApp(App):
             
 if __name__ == '__main__':
     global exp
+    global disp
     exp = ''
+    disp = ''
     MyApp().run()
