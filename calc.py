@@ -7,8 +7,8 @@ from kivy.core.window import Window
 def sin(num): return math.sin(math.radians(num))
 def cos(num): return math.cos(math.radians(num))
 def tan(num): return math.tan(math.radians(num))
-def expandBrackets():
-    txt = self.root.ids.textBox.text
+def expandBrackets(text):
+    txt = text
     amtbrackets = txt.count('(')
     for x in ') ':
         txt = txt.replace(x, '')
@@ -58,8 +58,7 @@ def expandBrackets():
             xregular = '+', xregular
         if constant[0] != '-':
             constant = '+', constant
-        bracketans = xsquared, 'x^2', xregular, 'x', constant  
-        self.root.ids.textBox.text = bracketans
+        return (xsquared, 'x^2', xregular, 'x', constant)
 
 #gui
 class MyApp(App):
@@ -86,6 +85,8 @@ class MyApp(App):
         elif txt == 'ans':
             exp += ans
             self.root.ids.textBox.text = exp
+        elif txt == 'expndbrcts':
+            self.root.ids.textBox.text = expandBrackets(self.root.ids.textBox.text)
         else:
             exp += txt
             self.root.ids.textBox.text = exp
