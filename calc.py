@@ -65,14 +65,6 @@ class MyApp(App):
     def build(self):
         Window.clearcolor = '#121212'
         Window.size = (800, 600)
-
-        
-        
-        
-        
-        
-        
-        
         
     def appendText(self, txt, dis):
         global exp
@@ -83,9 +75,12 @@ class MyApp(App):
             self.root.ids.textBox.text = disp
         elif txt == '=':
             global ans
-            ans = eval(exp)
-            self.root.ids.textBox.text = str(ans)
-            exp = ''
+            try:
+                ans = eval(exp)
+                self.root.ids.textBox.text = str(ans)
+                exp = ''
+            except:
+                pass
         elif txt == 'expndbrcts':
             self.root.ids.textBox.text = expandBrackets(self.root.ids.textBox.text)
         else:
@@ -95,26 +90,6 @@ class MyApp(App):
             except TypeError:
                 disp += txt
             self.root.ids.textBox.text = disp
-       
-        
-        
-        
-        
-        '''
-        elif txt == 'ans':
-            exp += ans
-            self.root.ids.textBox.text = exp
-        elif txt == 'expndbrcts':
-            self.root.ids.textBox.text = expandBrackets(self.root.ids.textBox.text)
-        else:
-            exp += txt
-            self.root.ids.textBox.text = exp
-'''
-            
-            
-            
-            
-            
             
 if __name__ == '__main__':
     global exp
