@@ -7,58 +7,54 @@ from kivy.core.window import Window
 def sin(num): return math.sin(math.radians(num))
 def cos(num): return math.cos(math.radians(num))
 def tan(num): return math.tan(math.radians(num))
+def asin(num): return math.degrees(math.asin(num))
+def acos(num): return math.degrees(math.acos(num))
+def atan(num): return math.degrees(math.atan(num))
 def expandBrackets(text):
     txt = str(text)
     amtbrackets = txt.count('(')
-    for x in ') ':
-        txt = txt.replace(x, '')
+    for x in ') ': txt = txt.replace(x, '')
     txt = txt.split('(')
     txt.pop(0)
 
-    var_x = []
+    vx, vc= [], []
     for x in range(0,amtbrackets):
         xlocation = txt[x].find('x')
-        if xlocation == 0:
-            var_x.append(1)
-        elif txt[x][0:2] == '-x':
-            var_x.append(-1)   
-        else:
-            var_x.append(int(txt[x][0:(xlocation)]))
+        if xlocation == 0: vx.append(1)
+        elif txt[x][0:2] == '-x': vx.append(-1)   
+        else: vx.append(int(txt[x][0:xlocation]))
 
-    var_c = []
-    for y in range(0,amtbrackets):
-        listindlen = len(txt[y])
-        symbollocation = txt[y].find('+')
-        if symbollocation == -1:
-            symbollocation = txt[y].find('-', 1)
-        var_c.append(int(txt[y][symbollocation:listindlen]))
+        listindlen = len(txt[x])
+        symbollocation = txt[x].find('+')
+        if symbollocation == -1: symbollocation = txt[x].find('-', 1)
+        vc.append(int(txt[x][symbollocation:listindlen]))
 
     if amtbrackets == 3:
-        xcubed = var_x[0] * var_x[1] * var_x[2]
-        xsquared = (((var_c[0] * var_x[1]) + (var_c[1] * var_x[0])) * var_x[2]) + (var_c[2] * var_x[0] * var_x[1])
-        xregular = (var_c[0] * var_c[1] * var_x[2]) + (((var_c[0] * var_x[1]) + (var_c[1] * var_x[0])) * var_c[2])
-        constant = var_c[0] * var_c[1] * var_c[2]
-        xsquared = str(xsquared)
-        xregular = str(xregular)
-        constant = str(constant)
-        if xsquared[0] != '-':
-            xsquared = str('+' + xsquared)
-        if xregular[0] != '-':
-            xregular = str('+' + xregular)
-        if constant[0] != '-':
-            constant = '+', constant
-        return str(str(xcubed) + 'x^3' + xsquared + 'x^2' + xregular + 'x' + constant)
+        xcubed = vx[0] * vx[1] * vx[2]
+        xsquared = (((vc[0] * vx[1]) + (vc[1] * vx[0])) * vx[2]) + (vc[2] * vx[0] * vx[1])
+        xregular = (vc[0] * vc[1] * vx[2]) + (((vc[0] * vx[1]) + (vc[1] * vx[0])) * vc[2])
+        constant = vc[0] * vc[1] * vc[2]
+        xcubed, xsquared, xregular, constant = str(xcubed), str(xsquared), str(xregular), str(constant)
+        if xsquared[0] != '-': xsquared = '+' + xsquared
+        if xregular[0] != '-': xregular = '+' + xregular
+        if constant[0] != '-': constant = '+' + constant
+        return str(xcubed + 'x^3' + xsquared + 'x^2' + xregular + 'x' + constant)
+
     elif amtbrackets == 2:
-        xsquared = var_x[0] * var_x[1]
-        xregular = (var_x[0] * var_c[1]) + (var_x[1] * var_c[0])
-        constant = var_c[0] * var_c[1]
-        xregular = str(xregular)
-        constant = str(constant)
-        if xregular[0] != '-':
-            xregular = '+', xregular
-        if constant[0] != '-':
-            constant = '+', constant
-        return str(str(xsquared) + 'x^2' + str(xregular) + 'x' + str(constant))
+        xsquared = vx[0] * vx[1]
+        xregular = (vx[0] * vc[1]) + (vx[1] * vc[0])
+        constant = vc[0] * vc[1]
+        xsquared, xregular, constant = str(xsquared), str(xregular), str(constant)
+        if xsquared == '1': xsquared = ''
+        elif xsquared == '-1': xsquared = '-'
+        if xregular == '1': xregular = ' '
+        elif xregular == '-1': xregular = '-'
+        if xregular[0] != '-' and xregular != ' ': xregular = '+ ' + xregular
+        elif xregular[0] != '-': xregular = '+ '
+        else: xregular = '- ' + xregular[1:]
+        if constant[0] != '-': constant = '+ ' + constant
+        else: constant = '- ' + constant[1:]
+        return str(xsquared + 'x\u00B2 ' + xregular + 'x ' + constant)
 
 #gui
 class MyApp(App):
@@ -67,15 +63,13 @@ class MyApp(App):
         Window.size = (800, 600)
         
     def appendText(self, txt, dis):
-        global exp
-        global disp
-        if txt == 'clr':
-            exp = ''
-            disp = ''
-            self.root.ids.textBox.text = disp
+        global exp, disp, ans
+        if txt == 'clr': exp, disp, self.root.ids.textBox.text = '', '', ''
+        elif txt == 'del': pass
         elif txt == '=':
-            global ans
             try:
+                if exp.count('(') > exp.count(')'):
+                    for x in range(0, exp.count('(') - exp.count(')')): exp = exp + ')'
                 ans = eval(exp)
                 self.root.ids.textBox.text = str(ans)
                 exp = ''
@@ -92,8 +86,6 @@ class MyApp(App):
             self.root.ids.textBox.text = disp
             
 if __name__ == '__main__':
-    global exp
-    global disp
-    exp = ''
-    disp = ''
+    global exp, disp
+    exp, disp = '', ''
     MyApp().run()

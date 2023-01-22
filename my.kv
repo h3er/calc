@@ -61,29 +61,29 @@ GridLayout:
 				text: '/'
 				on_release: app.appendText('/', None)
 			Button:
-				text: 'sinϴ'
+				text: 'sin\u03B8'
 				on_release: app.appendText('sin(', None)
 			Button:
-				text: 'cosϴ'
+				text: 'cos\u03B8'
 				on_release: app.appendText('cos(', None)
 			Button:
-				text: 'tanϴ'
+				text: 'tan\u03B8'
 				on_release: app.appendText('tan(', None)
 			Button:
-				text: 'sin⁻¹ϴ'
-				on_release: app.appendText('sin⁻¹(', 'asin(')
+				text: 'asin\u03B8'
+				on_release: app.appendText('asin(', 'sin\u207B\u00B9(')
 			Button:
-				text: 'cos⁻¹ϴ'
-				on_release: app.appendText('cos⁻¹(', 'acos(')
+				text: 'acos\u03B8'
+				on_release: app.appendText('acos(', 'cos\u207B\u00B9(')
 			Button:
-				text: 'tan⁻¹ϴ'
-				on_release: app.appendText('tan⁻¹(', 'atan(')
+				text: 'atan\u03B8'
+				on_release: app.appendText('atan(', 'tan\u207B\u00B9(')
 			Button:
 				text: '^'
-				on_release: app.appendText('^', '**')
+				on_release: app.appendText('**', '^')
 			Button:
 				text: '√'
-				on_release: app.appendText('√', 'sqrt(')
+				on_release: app.appendText('math.sqrt(', '√')
 			Button:
 				text: '('
 				on_release: app.appendText('(', None)
@@ -100,5 +100,13 @@ GridLayout:
 				text: 'expand brackets'
 				on_release: app.appendText('expndbrcts', None)
 			Button:
+				text: 'delete'
+				on_release: app.appendText('del', None)
+			Button:
 				text: 'clear'
 				on_release: app.appendText('clr', None)
+
+				
+			Button:
+				text: 'selection box'
+				on_release: app.appendText(None, None)
