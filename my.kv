@@ -105,8 +105,9 @@ GridLayout:
 			Button:
 				text: 'clear'
 				on_release: app.appendText('clr', None, None, None)
-
-				
-			Button:
-				text: 'selection box'
-				on_release: app.appendText(None, None, None, None)
+			
+			Spinner:
+				text: 'Regular'
+				id: spnr
+				on_text: app.changeSpinner(spnr.text)
+				values: ['Regular', 'Expanding Brackets']
