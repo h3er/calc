@@ -16,11 +16,11 @@ def quadEqu(equation):
         xsqucation = equation.find('x')
         nums.append(equation[:xsqulocation])
         xreglocation = equation.find('x', xsqulocation + 1)
-        nums.append(equation[xsqucation + 1:xreglocation]
-        nums.append(equation[xreglocation +1:]
+        nums.append(equation[xsqucation + 1:xreglocation])
+        nums.append(equation[xreglocation +1:])
         print(nums)
-        ans1 =  (-nums[1] +- ) / (2 * nums[0])
-        ans2
+        ans1 = 1
+        ans2 = 1
     except: pass
 def expandBrackets(text):
     txt = str(text)
@@ -94,12 +94,13 @@ class MyApp(App):
     def changeSpinner(self, txt):
         pass
         
-    def appendText(self, txt, dis, txtdel, disdel):
-        global exp, disp, ans
+    def appendText(self, txt, dis):
+        global exp, disp, ans, lenexp, lendisp
         if txt == 'clr': exp, disp, self.root.ids.textBox.text = '', '', ''
         elif txt == 'del':
-            try: exp, disp = exp[:-txtdel], disp[:-disdel]
-            except TypeError: exp, disp = exp[:-txtdel], disp[:-txtdel]
+            try: exp, disp, lenexp, lendisp = exp[:-int(lenexp[-1])], disp[:-int(lendisp[-1])], lenexp.pop(), lendisp.pop()
+            except TypeError: exp, disp, lenexp, lendisp = exp[:-int(lenexp[-1])], disp[:-int(lenexp[-1])], lenexp.pop(), lendisp.pop()
+            self.root.ids.textBox.text = disp
         elif txt == '=':
             try:
                 if exp.count('(') > exp.count(')'):
@@ -114,11 +115,16 @@ class MyApp(App):
             self.root.ids.textBox.text = expandBrackets(self.root.ids.textBox.text)
         else:
             exp += txt
-            try: disp += dis
-            except TypeError: disp += txt
+            lenexp.append(len(txt))
+            if dis == None:
+                lendisp.append(len(txt))
+                disp += txt
+            else:
+                lendisp.append(len(dis))
+                disp += dis
             self.root.ids.textBox.text = disp
             
 if __name__ == '__main__':
-    global exp, disp
-    exp, disp = '', ''
+    global exp, disp, lenexp, lendisp
+    exp, disp, lenexp, lendisp = '', '', [], []
     MyApp().run()
