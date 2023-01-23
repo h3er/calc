@@ -79,10 +79,13 @@ class MyApp(App):
         Window.clearcolor = '#121212'
         Window.size = (800, 600)
         
-    def appendText(self, txt, dis):
+    def appendText(self, txt, dis, txtdel, disdel):
         global exp, disp, ans
         if txt == 'clr': exp, disp, self.root.ids.textBox.text = '', '', ''
-        elif txt == 'del': pass
+        elif txt == 'del':
+            try: exp, disp = exp[:-txtdel], disp[:-disdel]
+            except TypeError: exp, disp = exp[:-txtdel], disp[:-txtdel]
+                
         elif txt == '=':
             try:
                 if exp.count('(') > exp.count(')'):
