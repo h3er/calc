@@ -10,6 +10,18 @@ def tan(num): return math.tan(math.radians(num))
 def asin(num): return math.degrees(math.asin(num))
 def acos(num): return math.degrees(math.acos(num))
 def atan(num): return math.degrees(math.atan(num))
+def quadEqu(equation):
+    try:
+        nums = []
+        xsqucation = equation.find('x')
+        nums.append(equation[:xsqulocation])
+        xreglocation = equation.find('x', xsqulocation + 1)
+        nums.append(equation[xsqucation + 1:xreglocation]
+        nums.append(equation[xreglocation +1:]
+        print(nums)
+        ans1 =  (-nums[1] +- ) / (2 * nums[0])
+        ans2
+    except: pass
 def expandBrackets(text):
     txt = str(text)
     amtbrackets = txt.count('(')
@@ -79,13 +91,15 @@ class MyApp(App):
         Window.clearcolor = '#121212'
         Window.size = (800, 600)
         
+    def changeSpinner(self, txt):
+        pass
+        
     def appendText(self, txt, dis, txtdel, disdel):
         global exp, disp, ans
         if txt == 'clr': exp, disp, self.root.ids.textBox.text = '', '', ''
         elif txt == 'del':
             try: exp, disp = exp[:-txtdel], disp[:-disdel]
             except TypeError: exp, disp = exp[:-txtdel], disp[:-txtdel]
-                
         elif txt == '=':
             try:
                 if exp.count('(') > exp.count(')'):
@@ -93,16 +107,15 @@ class MyApp(App):
                 ans = eval(exp)
                 self.root.ids.textBox.text = str(ans)
                 exp = ''
-            except:
-                pass
+            except: pass
         elif txt == 'expndbrcts':
+            self.root.ids.textBox.text = expandBrackets(self.root.ids.textBox.text)
+        elif txt == 'quadEqu':
             self.root.ids.textBox.text = expandBrackets(self.root.ids.textBox.text)
         else:
             exp += txt
-            try:
-                disp += dis
-            except TypeError:
-                disp += txt
+            try: disp += dis
+            except TypeError: disp += txt
             self.root.ids.textBox.text = disp
             
 if __name__ == '__main__':
