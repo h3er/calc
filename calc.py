@@ -35,10 +35,27 @@ def expandBrackets(text):
         xregular = (vc[0] * vc[1] * vx[2]) + (((vc[0] * vx[1]) + (vc[1] * vx[0])) * vc[2])
         constant = vc[0] * vc[1] * vc[2]
         xcubed, xsquared, xregular, constant = str(xcubed), str(xsquared), str(xregular), str(constant)
-        if xsquared[0] != '-': xsquared = '+' + xsquared
-        if xregular[0] != '-': xregular = '+' + xregular
-        if constant[0] != '-': constant = '+' + constant
-        return str(xcubed + 'x^3' + xsquared + 'x^2' + xregular + 'x' + constant)
+        
+        if xcubed == '1': xcubed = ''
+        elif xcubed == '-1': xcubed = '-'
+            
+        if xsquared == '1': xsquared = ' '
+        elif xsquared == '-1': xsquared = '-'
+        if xsquared[0] != '-' and xsquared != ' ': xsquared = '+ ' + xsquared
+        elif xsquared[0] != '-': xsquared = '+ '
+        else: xsquared = '- ' + xsquared[1:]
+            
+        if xregular == '1': xregular = ' '
+        elif xregular == '-1': xregular = '-'
+        if xregular[0] != '-' and xregular != ' ': xregular = '+ ' + xregular
+        elif xregular[0] != '-': xregular = '+ '
+        else: xregular = '- ' + xregular[1:]
+            
+        if constant[0] != '-': constant = '+ ' + constant
+        else: constant = '- ' + constant[1:]
+        
+        
+        return str(xcubed + 'x\u00B3 ' + xsquared + 'x\u00B2 ' + xregular + 'x' + constant)
 
     elif amtbrackets == 2:
         xsquared = vx[0] * vx[1]
