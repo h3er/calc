@@ -19,8 +19,9 @@ def quadEqu(equation):
         nums.append(equation[xsqucation + 1:xreglocation])
         nums.append(equation[xreglocation +1:])
         print(nums)
-        ans1 = 1
-        ans2 = 1
+        ans1 = (-nums[1] + math.sqrt(nums[1]**2-(4*nums[0]*nums[2])) / (2 * nums[0])
+        ans2 = (-nums[1] - math.sqrt(nums[1]**2-(4*nums[0]*nums[2])) / (2 * nums[0])
+        return (f'x = {ans1} and x = {ans2}')
     except: pass
 def expandBrackets(text):
     txt = str(text)
