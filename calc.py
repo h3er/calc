@@ -1,4 +1,5 @@
 import math
+from numpy import array
 import kivy
 from kivy.app import App
 from kivy.core.window import Window
@@ -127,5 +128,5 @@ class MyApp(App):
             
 if __name__ == '__main__':
     global exp, disp, lenexp, lendisp
-    exp, disp, lenexp, lendisp = '', '', [], []
+    exp, disp, lenexp, lendisp = '', '', [], [] #use numpy array
     MyApp().run()
