@@ -1,5 +1,4 @@
 import math
-from numpy import array
 import kivy
 from kivy.app import App
 from kivy.core.window import Window
@@ -86,6 +85,9 @@ def expandBrackets(text):
         if constant[0] != '-': constant = '+ ' + constant
         else: constant = '- ' + constant[1:]
         return str(xsquared + 'x\u00B2 ' + xregular + 'x ' + constant)
+                
+def simultaneousEqu():
+    pass
 
 #gui
 class MyApp(App):
@@ -100,6 +102,7 @@ class MyApp(App):
         global exp, disp, ans, lenexp, lendisp
         if txt == 'clr': exp, disp, self.root.ids.textBox.text = '', '', ''
         elif txt == 'del':
+            print(exp, disp, lenexp, lendisp)
             try: exp, disp, lenexp, lendisp = exp[:-int(lenexp[-1])], disp[:-int(lendisp[-1])], lenexp.pop(), lendisp.pop()
             except TypeError: exp, disp, lenexp, lendisp = exp[:-int(lenexp[-1])], disp[:-int(lenexp[-1])], lenexp.pop(), lendisp.pop()
             self.root.ids.textBox.text = disp
@@ -118,6 +121,7 @@ class MyApp(App):
         else:
             exp += txt
             lenexp.append(len(txt))
+            print(lenexp, lendisp)
             if dis == None:
                 lendisp.append(len(txt))
                 disp += txt
@@ -128,5 +132,5 @@ class MyApp(App):
             
 if __name__ == '__main__':
     global exp, disp, lenexp, lendisp
-    exp, disp, lenexp, lendisp = '', '', [], [] #use numpy array
+    exp, disp, lenexp, lendisp = '', '', [], []
     MyApp().run()
